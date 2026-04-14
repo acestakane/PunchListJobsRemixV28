@@ -1,0 +1,89 @@
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
+import axios from "axios";
+
+const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
+const TOKEN_KEY = "punchlist_token";
+
+const AuthContext = createContext(null);
+
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [token, setToken] = useState(() => sessionStorage.getItem(TOKEN_KEY));
+  const [loading, setLoading] = useState(true);
+
+  // logout declared first so fetchMe can depend on it
+  const logout = useCallback(() => {
+    sessionStorage.removeItem(TOKEN_KEY);
+    delete axios.defaults.headers.common["Authorization"];
+    setToken(null);
+    setUser(null);
+  }, []);
+
+  const fetchMe = useCallback(async () => {
+    try {
+      const res = await axios.get(`${API}/users/me`);
+      setUser(res.data);
+    } catch {
+      logout();
+    } finally {
+      setLoading(false);
+    }
+  }, [logout]);
+
+  useEffect(() => {
+    if (token) {
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+      fetchMe();
+    } else {
+      setLoading(false);
+    }
+  }, [token, fetchMe]);
+
+  const login = useCallback(async (email, password, captcha_token) => {
+    const res = await axios.post(`${API}/auth/login`, { email, password, captcha_token });
+    const { access_token, user: userData } = res.data;
+    sessionStorage.setItem(TOKEN_KEY, access_token);
+    axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+    setToken(access_token);
+    setUser(userData);
+    return userData;
+  }, []);
+
+  const register = useCallback(async (formData) => {
+    const res = await axios.post(`${API}/auth/register`, formData);
+    const { access_token, user: userData } = res.data;
+    sessionStorage.setItem(TOKEN_KEY, access_token);
+    axios.defaults.headers.common["Authorization"] = `Bearer ${access_token}`;
+    setToken(access_token);
+    setUser(userData);
+    return userData;
+  }, []);
+
+  const refreshUser = useCallback(async () => {
+    if (token) {
+      try {
+        const res = await axios.get(`${API}/users/me`);
+        setUser(res.data);
+        return res.data;
+      } catch {
+        logout();
+      }
+    }
+  }, [token, logout]);
+
+  const updateUser = useCallback((updates) => {
+    setUser(prev => prev ? { ...prev, ...updates } : null);
+  }, []);
+
+  return (
+    <AuthContext.Provider value={{ user, token, loading, login, register, logout, refreshUser, updateUser }}>
+      {children}
+    </AuthContext.Provider>
+  );
+}
+
+export const useAuth = () => {
+  const ctx = useContext(AuthContext);
+  if (!ctx) throw new Error("useAuth must be used within AuthProvider");
+  return ctx;
+};
