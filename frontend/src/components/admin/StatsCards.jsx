@@ -74,7 +74,7 @@ export default function StatsCards({ statCards, metricsCards, analytics, pieData
                 <span className="text-xs font-bold text-slate-400 w-4">#{i+1}</span>
                 <div className="flex-1">
                   <p className="text-xs font-semibold text-[#050A30] dark:text-white truncate">{c.name}</p>
-                  <p className="text-xs text-slate-500 capitalize">{c.trade || "—"}</p>
+                  <p className="text-xs text-slate-500 capitalize">{c.discipline || c.trade || "—"}</p>
                 </div>
                 <span className="text-xs font-bold text-emerald-600">{c.jobs_completed} jobs</span>
               </div>

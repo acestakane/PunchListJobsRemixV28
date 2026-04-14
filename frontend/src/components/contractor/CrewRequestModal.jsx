@@ -12,7 +12,7 @@ export function CrewRequestModal({ crew, message, onMessageChange, onSend, onClo
           Request {crew.name}
         </h2>
         <p className="text-slate-500 text-sm mb-4">
-          {(crew.trade?.startsWith("__cat__:") ? crew.trade.replace("__cat__:", "") : crew.trade) || "General Labor"}
+          {(crew.discipline || (crew.trade?.startsWith("__cat__:") ? crew.trade.replace("__cat__:", "") : crew.trade)) || "General Labor"}
         </p>
         <textarea
           value={message}

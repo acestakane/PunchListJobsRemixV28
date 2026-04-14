@@ -748,7 +748,7 @@ export default function ContractorDashboard() {
                         <div key={c.id} className="flex items-center justify-between gap-2">
                           <div className="min-w-0">
                             <p className="text-xs font-bold text-slate-800 dark:text-white truncate">{c.name}</p>
-                            <p className="text-[10px] text-slate-500">{c.trade || "General"} · ⭐ {c.rating?.toFixed(1) || "New"}</p>
+                            <p className="text-[10px] text-slate-500">{c.discipline || c.trade || "General"} · ⭐ {c.rating?.toFixed(1) || "New"}</p>
                           </div>
                           <div className="flex gap-1 flex-shrink-0">
                             <button onClick={() => approveApplicant(job.id, c.id)}

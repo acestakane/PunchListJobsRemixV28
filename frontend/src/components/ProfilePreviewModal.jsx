@@ -95,7 +95,7 @@ export function ProfilePreviewModal({ userId, onClose }) {
                 <Briefcase className="w-4 h-4" />
                 <span className="text-sm font-semibold capitalize">
                   {profile.role === "crew" ? "Crew Member" : "Contractor"}
-                  {profile.trade && ` • ${profile.trade}`}
+                  {(profile.discipline || profile.trade) && ` • ${profile.discipline || profile.trade}`}
                 </span>
               </div>
 

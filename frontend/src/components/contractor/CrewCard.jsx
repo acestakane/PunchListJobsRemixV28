@@ -26,7 +26,7 @@ export function CrewCard({ member, onRequest, onViewProfile, isViewerFree, showT
             {member.is_online && <span className="w-2 h-2 rounded-full bg-emerald-500 flex-shrink-0" title="Online" />}
           </div>
           <p className="text-xs text-slate-500 capitalize">
-            {(member.trade?.startsWith("__cat__:") ? member.trade.replace("__cat__:", "") : member.trade) || "General Labor"}
+            {member.discipline || (member.trade?.startsWith("__cat__:") ? member.trade.replace("__cat__:", "") : member.trade) || "General Labor"}
             {member.skill ? ` (${member.skill})` : ""}
           </p>
           <div className="flex items-center gap-1 mt-0.5">

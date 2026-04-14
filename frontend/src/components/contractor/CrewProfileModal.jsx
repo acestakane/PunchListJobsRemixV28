@@ -87,7 +87,7 @@ export function CrewProfileModal({ userId, onClose }) {
               {profile.name}
             </h3>
             <p className="text-slate-500 text-sm capitalize">
-              {(profile.trade?.startsWith("__cat__:") ? profile.trade.replace("__cat__:", "") : profile.trade) || "General Labor"}
+              {(profile.discipline || (profile.trade?.startsWith("__cat__:") ? profile.trade.replace("__cat__:", "") : profile.trade)) || "General Labor"}
             </p>
             {profile.rating_count > 0 && (
               <div className="flex items-center gap-1 mt-0.5">

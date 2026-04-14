@@ -30,7 +30,7 @@ export default function TopPerformersTab() {
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-[#050A30] dark:text-white text-sm truncate">{c.name}</p>
-                  <p className="text-xs text-slate-500 capitalize">{c.trade || "—"}</p>
+                  <p className="text-xs text-slate-500 capitalize">{c.discipline || c.trade || "—"}</p>
                 </div>
                 <div className="flex items-center gap-1 text-yellow-500 flex-shrink-0">
                   <Star className="w-3.5 h-3.5 fill-current" />
@@ -62,7 +62,7 @@ export default function TopPerformersTab() {
                 </span>
                 <div className="flex-1 min-w-0">
                   <p className="font-semibold text-[#050A30] dark:text-white text-sm truncate">{c.name}</p>
-                  <p className="text-xs text-slate-500 capitalize">{c.trade || "—"}</p>
+                  <p className="text-xs text-slate-500 capitalize">{c.discipline || c.trade || "—"}</p>
                 </div>
                 <div className="flex items-center gap-1 flex-shrink-0">
                   <Star className="w-4 h-4 text-yellow-400 fill-yellow-400" />

@@ -427,7 +427,7 @@ export default function JobMap({
                 <Popup>
                   <div style={{ fontFamily: "Inter, sans-serif", minWidth: 140 }}>
                     <strong>{member.name}</strong>
-                    <p style={{ fontSize: 12, color: "#666" }}>{member.trade || "General Labor"}</p>
+                    <p style={{ fontSize: 12, color: "#666" }}>{member.discipline || member.trade || "General Labor"}</p>
                     <p style={{ fontSize: 12 }}>Rating: {member.rating?.toFixed(1) || "New"} ⭐</p>
                     {onCrewProfile && (
                       <button
